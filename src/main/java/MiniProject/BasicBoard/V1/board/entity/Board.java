@@ -1,25 +1,35 @@
 package MiniProject.BasicBoard.V1.board.entity;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-public class Board {
+@Getter
+@NoArgsConstructor
+public class Board extends TimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String title;
 
-    @Column
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
-    @Column(name = "CREATED_AT")
-    private LocalDateTime createdAt;
 
-    @Column(name = "MODIFIED_AT")
-    private LocalDateTime modifiedAt;
+    @Builder
+    public Board(String title, String body){
+        this.title = title;
+        this.body = body;
+    }
+
+    public void update(String title, String body){
+        this.title = title;
+        this.body = body;
+    }
 
 }
