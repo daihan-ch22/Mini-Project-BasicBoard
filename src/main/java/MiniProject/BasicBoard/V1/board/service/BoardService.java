@@ -3,6 +3,7 @@ package MiniProject.BasicBoard.V1.board.service;
 import MiniProject.BasicBoard.V1.board.controller.BoardController;
 import MiniProject.BasicBoard.V1.board.dto.BoardPatchDto;
 import MiniProject.BasicBoard.V1.board.dto.BoardPostDto;
+import MiniProject.BasicBoard.V1.board.dto.BoardResponseDtoForAll;
 import MiniProject.BasicBoard.V1.board.dto.BoardResponseDtoForOne;
 import MiniProject.BasicBoard.V1.board.entity.Board;
 import MiniProject.BasicBoard.V1.board.repository.BoardRepository;
@@ -10,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +44,22 @@ public class BoardService {
         Board targetBoard = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
         return new BoardResponseDtoForOne(targetBoard);
     }
+
+    @Transactional(readOnly = true)
+    public List<BoardResponseDtoForAll> getAllPosts(){
+        return boardRepository.findAllPostByOrder().stream()
+                .map(BoardResponseDtoForAll::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deletePost(Long id){
+
+        Board targetBoard = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
+
+        boardRepository.delete(targetBoard);
+    }
+
+
 
 }

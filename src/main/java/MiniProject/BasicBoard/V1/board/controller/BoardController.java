@@ -49,10 +49,11 @@ public class BoardController {
     }
 
     @DeleteMapping("/{post-id}")
-    public ResponseEntity deletePost(){
+    public ResponseEntity deletePost(@PathVariable("post-id") Long id){
         log.debug("deletePost");
 
-        return ResponseEntity.ok("delete post");
+        boardService.deletePost(id);
+        return ResponseEntity.ok("Deletion completed");
     }
 
 
