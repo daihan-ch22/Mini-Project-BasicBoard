@@ -1,5 +1,6 @@
 package MiniProject.BasicBoard.V1.board.entity;
 
+import MiniProject.BasicBoard.V1.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,10 @@ public class Board extends TimeEntity{
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
+    private Member member;
 
 
     @Builder

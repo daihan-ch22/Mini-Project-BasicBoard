@@ -1,5 +1,6 @@
 package MiniProject.BasicBoard.V1.board.dto;
 
+import MiniProject.BasicBoard.V1.board.entity.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,12 @@ public class BoardPatchDto {
     public BoardPatchDto(String title, String body) {
         this.title = title;
         this.body = body;
+    }
+
+    public Board dtoToBoardEntity() {
+        return Board.builder()
+                .title(title)
+                .body(body)
+                .build();
     }
 }

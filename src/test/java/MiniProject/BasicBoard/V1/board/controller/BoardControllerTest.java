@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BoardControllerTest {
 
     BoardPostDto boardPostDto;
-
     BoardPatchDto boardPatchDto;
 
     @Autowired
@@ -34,7 +33,6 @@ class BoardControllerTest {
     public void init(){
         String title = "testTitle";
         String body = "testBody";
-
         boardPostDto = new BoardPostDto(title, body);
     }
 
@@ -47,7 +45,7 @@ class BoardControllerTest {
     @DisplayName("Create Post Test")
     void createPost() throws Exception {
         //given & when
-        Long id = boardService.savePost(boardPostDto);
+        Long id = boardService.createPost(boardPostDto);
 
         //then
         assertThat(boardService.getOnePost(id).getTitle()).isEqualTo("testTitle");
@@ -58,7 +56,7 @@ class BoardControllerTest {
     @Test
     void modifyPost() {
         //given
-        Long id = boardService.savePost(boardPostDto);
+        Long id = boardService.createPost(boardPostDto);
 
         //when
         String title = "modifiedTitle";
@@ -74,10 +72,10 @@ class BoardControllerTest {
     @Test
     void getOnePost() {
         //given & when
-        Long id = boardService.savePost(boardPostDto);
+        Long id = boardService.createPost(boardPostDto);
 
         boardPostDto = new BoardPostDto("secondTitle", "secondBody");
-        boardService.savePost(boardPostDto);
+        boardService.createPost(boardPostDto);
 
         //then
         assertThat(boardService.getOnePost(id).getTitle()).isEqualTo("testTitle");
@@ -88,9 +86,9 @@ class BoardControllerTest {
     @Test
     void getAllPosts() {
         //given
-        boardService.savePost(boardPostDto);
-        boardService.savePost(boardPostDto);
-        boardService.savePost(boardPostDto);
+        boardService.createPost(boardPostDto);
+        boardService.createPost(boardPostDto);
+        boardService.createPost(boardPostDto);
 
         //when
         List<BoardResponseDtoForAll> testList = boardService.getAllPosts();
@@ -103,7 +101,7 @@ class BoardControllerTest {
     @Test
     void deletePost() {
         //given
-        Long targetId = boardService.savePost(boardPostDto);
+        Long targetId = boardService.createPost(boardPostDto);
 
         //when
         boardService.deletePost(targetId);

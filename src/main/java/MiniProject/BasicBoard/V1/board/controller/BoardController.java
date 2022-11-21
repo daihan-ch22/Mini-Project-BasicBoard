@@ -2,12 +2,15 @@ package MiniProject.BasicBoard.V1.board.controller;
 
 import MiniProject.BasicBoard.V1.board.dto.BoardPatchDto;
 import MiniProject.BasicBoard.V1.board.dto.BoardPostDto;
-import MiniProject.BasicBoard.V1.board.entity.Board;
+import MiniProject.BasicBoard.V1.board.dto.BoardResponseDtoForAll;
+import MiniProject.BasicBoard.V1.board.dto.BoardResponseDtoForOne;
 import MiniProject.BasicBoard.V1.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/boardV1")
@@ -22,7 +25,7 @@ public class BoardController {
     @PostMapping("/post")
     public ResponseEntity createPost(@RequestBody BoardPostDto postDto){
 
-        log.debug("Successfully created new post, Post Id={}", boardService.savePost(postDto));
+        log.debug("Successfully created new post, Post Id={}", boardService.createPost(postDto));
         return ResponseEntity.ok("새 게시물 등록 완료");
     }
 
@@ -34,18 +37,20 @@ public class BoardController {
     }
 
     @GetMapping("/{post-id}")
-    public ResponseEntity getOnePost(@PathVariable("post-id") Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public BoardResponseDtoForOne getOnePost(@PathVariable("post-id") Long id) {
 
-        log.debug("Get One Post!");
+        log.debug("Get One Post! Post Id={}", id);
 
-        return ResponseEntity.ok(boardService.getOnePost(id));
+        return boardService.getOnePost(id);
     }
 
     @GetMapping("/all-posts")
-    public ResponseEntity getPosts() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<BoardResponseDtoForAll> getPosts() {
         log.debug("get whole posts");
 
-        return ResponseEntity.ok("get whole posts");
+        return boardService.getAllPosts();
     }
 
     @DeleteMapping("/{post-id}")

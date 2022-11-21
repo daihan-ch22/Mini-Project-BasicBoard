@@ -23,7 +23,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public Long savePost(BoardPostDto postDto){
+    public Long createPost(BoardPostDto postDto){
 
         return boardRepository.save(postDto.dtoToBoardEntity()).getId();
     }
@@ -33,7 +33,7 @@ public class BoardService {
 
         //ID 가져오기
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
-        //ID로 Board Entity내용읠 Builder로 수정
+        //ID로 Board Entity내용을 Builder로 수정
         board.update(patchDto.getTitle(), patchDto.getBody());
         return id;
     }
