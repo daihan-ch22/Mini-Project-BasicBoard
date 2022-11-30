@@ -33,22 +33,16 @@ public class Member extends TimeEntity {
     @Enumerated(EnumType.STRING)
     private MemberRoleType memberRole;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Board> posts = new ArrayList<>();
 
 
-
-
     @Builder
-    public Member(Long id, String name, String email, String password, LocalDateTime createdAt, MemberRoleType memberRole) {
+    public Member(Long id, String name, String email, String password, MemberRoleType memberRole) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.createdAt = createdAt;
         this.memberRole = memberRole;
     }
 }

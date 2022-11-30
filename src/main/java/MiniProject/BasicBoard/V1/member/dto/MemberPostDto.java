@@ -13,14 +13,12 @@ public class MemberPostDto {
     private String name;
     private String password;
     private String email;
-    private MemberRoleType roleType; //사용자 생성시 기본값
 
     @Builder
     public MemberPostDto(String name, String password, String email){
         this.name = name;
         this.password = password;
         this.email = email;
-        this.roleType = MemberRoleType.USER;
     }
 
     public Member memberDtoToEntity(){
@@ -28,7 +26,7 @@ public class MemberPostDto {
                 .name(name)
                 .password(password)
                 .email(email)
-                .memberRole(roleType)
+                .memberRole(MemberRoleType.USER)
                 .build();
     }
 

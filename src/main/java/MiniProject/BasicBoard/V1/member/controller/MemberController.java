@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MemberController {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
     @PostMapping("/signup")
     public ResponseEntity createMember(@RequestBody MemberPostDto memberPostDto){
