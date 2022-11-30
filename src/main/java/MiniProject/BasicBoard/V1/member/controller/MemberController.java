@@ -1,7 +1,11 @@
 package MiniProject.BasicBoard.V1.member.controller;
 
+import MiniProject.BasicBoard.V1.member.dto.MemberPostDto;
+import MiniProject.BasicBoard.V1.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MemberController {
 
-    @PostMapping("/signup")
-    public void signUp() {
+    private MemberService memberService;
 
+    @PostMapping("/signup")
+    public ResponseEntity createMember(@RequestBody MemberPostDto memberPostDto){
+        log.info("Successfully created new Member, Member Id={}", memberService.createMember(memberPostDto));
+        return ResponseEntity.ok("회원 가입 성공");
     }
 
     @GetMapping("/{member-id}")
@@ -24,7 +31,6 @@ public class MemberController {
     public void updateMember(@PathVariable(name = "member-id") Long memberId){
 
     }
-
 
     //delete member -> make deactivate, not removing member data
     @DeleteMapping("/{member-id}")

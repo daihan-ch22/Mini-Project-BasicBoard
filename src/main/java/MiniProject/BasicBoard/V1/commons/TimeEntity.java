@@ -1,4 +1,4 @@
-package MiniProject.BasicBoard.V1.board.entity;
+package MiniProject.BasicBoard.V1.commons;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,6 +9,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
+//생성시간, 수정시간 관련 글로벌 클래스
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

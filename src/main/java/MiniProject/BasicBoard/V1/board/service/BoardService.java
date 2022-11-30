@@ -31,17 +31,18 @@ public class BoardService {
     @Transactional
     public Long patchPost(BoardPatchDto patchDto, Long id){
 
-        //ID 가져오기
-        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
+        //ID 검증 & 가져오기
+        Board board = verifyingBoard(id);
         //ID로 Board Entity내용을 Builder로 수정
         board.update(patchDto.getTitle(), patchDto.getBody());
+
         return id;
     }
 
     @Transactional(readOnly = true)
     public BoardResponseDtoForOne getOnePost(Long id){
 
-        Board targetBoard = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
+        Board targetBoard = verifyingBoard(id);
         return new BoardResponseDtoForOne(targetBoard);
     }
 
@@ -54,10 +55,15 @@ public class BoardService {
 
     @Transactional
     public void deletePost(Long id){
-
-        Board targetBoard = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No such post"));
-
+        Board targetBoard = verifyingBoard(id);
         boardRepository.delete(targetBoard);
+    }
+
+    //해당 id의 게시글이 존재하는지 먼저 확인
+    private Board verifyingBoard(Long id){
+        return
+                boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ID: No Such post"));
+
     }
 
 

@@ -1,5 +1,6 @@
 package MiniProject.BasicBoard.V1.board.entity;
 
+import MiniProject.BasicBoard.V1.commons.TimeEntity;
 import MiniProject.BasicBoard.V1.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Board extends TimeEntity{
+public class Board extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

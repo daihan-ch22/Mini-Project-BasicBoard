@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/boardV1")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 @Slf4j
 public class BoardController {
