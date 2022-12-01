@@ -5,6 +5,7 @@ import MiniProject.BasicBoard.V1.member.entity.MemberRoleType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @Getter
 @NoArgsConstructor

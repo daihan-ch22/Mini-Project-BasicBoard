@@ -37,6 +37,16 @@ public class Member extends TimeEntity {
     private List<Board> posts = new ArrayList<>();
 
 
+    public void update(String name, String password, String email){
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
+    public void changeGrade(MemberRoleType memberRole){
+        this.memberRole = memberRole;
+    }
+
     @Builder
     public Member(Long id, String name, String email, String password, MemberRoleType memberRole) {
         this.id = id;

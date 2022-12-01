@@ -61,6 +61,11 @@ class MemberControllerTest {
 
     @Test
     void getMember() {
+        //given
+        Long memberId = memberService.createMember(memberPostDto);
+        Long memberId1 = memberService.createMember(memberPostDto1);
+
+
     }
 
     @Test
