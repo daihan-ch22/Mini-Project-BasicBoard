@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -53,10 +55,11 @@ class MemberControllerTest {
     void createMember() {
         //given & when
         Long memberId = memberService.createMember(memberPostDto);
-        Long memberId1 = memberService.createMember(memberPostDto1);
+        Optional<Member> memberTest = memberRepository.findById(memberId);
+
 
         //then
-        Assertions.assertThat(memberId).isEqualTo(1L);
+        assertThat(memberTest.get().getName()).isEqualTo("name1");
     }
 
     @Test
@@ -64,8 +67,10 @@ class MemberControllerTest {
         //given
         Long memberId = memberService.createMember(memberPostDto);
         Long memberId1 = memberService.createMember(memberPostDto1);
+        Member memberTest = memberService.getMember(memberId1);
 
-
+        //then
+        assertThat(2L).isEqualTo(memberTest.getId());
     }
 
     @Test

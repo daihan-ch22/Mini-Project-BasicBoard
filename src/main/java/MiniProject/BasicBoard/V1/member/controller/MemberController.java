@@ -38,7 +38,7 @@ public class MemberController {
         return new ResponseEntity<>("회원 정보 업데이트 성공", HttpStatus.OK);
     }
 
-    @PostMapping("/{member-id")
+    @PostMapping("/{member-id}")
     public ResponseEntity sleepMember(@PathVariable(name = "member-id") Long memberId){
         log.info("Member status has changed USER -> SLEEP, Member Id={}", memberId);
         memberService.memberGradeToSleep(memberId);
