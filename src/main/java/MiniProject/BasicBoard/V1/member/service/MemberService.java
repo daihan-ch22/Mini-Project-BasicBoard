@@ -25,7 +25,6 @@ public class MemberService {
     }
 
     public Long updateMember(Long id,MemberPatchDto memberPatchDto){
-
         Member member = verifyingMember(id);
         member.update(memberPatchDto.getName(), memberPatchDto.getPassword(), memberPatchDto.getEmail());
 

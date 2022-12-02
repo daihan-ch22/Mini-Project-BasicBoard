@@ -1,5 +1,6 @@
 package MiniProject.BasicBoard.V1.member.controller;
 
+import MiniProject.BasicBoard.V1.member.dto.MemberPatchDto;
 import MiniProject.BasicBoard.V1.member.dto.MemberPostDto;
 import MiniProject.BasicBoard.V1.member.entity.Member;
 import MiniProject.BasicBoard.V1.member.entity.MemberRoleType;
@@ -29,6 +30,7 @@ class MemberControllerTest {
 
     MemberPostDto memberPostDto;
     MemberPostDto memberPostDto1;
+    MemberPatchDto memberPatchDto;
 
 
     @BeforeEach
@@ -67,6 +69,8 @@ class MemberControllerTest {
         //given
         Long memberId = memberService.createMember(memberPostDto);
         Long memberId1 = memberService.createMember(memberPostDto1);
+
+        //when
         Member memberTest = memberService.getMember(memberId1);
 
         //then
@@ -75,6 +79,22 @@ class MemberControllerTest {
 
     @Test
     void updateMember() {
+        //given
+        Long memberId = memberService.createMember(memberPostDto);
+
+        String name = "changed!";
+        String password = "changedPassword";
+        String email = "abc@gmail.com";
+        memberPatchDto = new MemberPatchDto(name,password,email);
+
+
+
+        //when
+        memberService.updateMember(1L, memberPatchDto);
+        Member memberTest = memberService.getMember(1L);
+
+        //then
+        assertThat(memberTest.getName()).isEqualTo("changed!");
     }
 
     @Test
