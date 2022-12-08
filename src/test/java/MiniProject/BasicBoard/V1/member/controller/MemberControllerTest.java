@@ -1,5 +1,6 @@
 package MiniProject.BasicBoard.V1.member.controller;
 
+import MiniProject.BasicBoard.V1.member.dto.MemberGradeDto;
 import MiniProject.BasicBoard.V1.member.dto.MemberPatchDto;
 import MiniProject.BasicBoard.V1.member.dto.MemberPostDto;
 import MiniProject.BasicBoard.V1.member.entity.Member;
@@ -42,7 +43,7 @@ class MemberControllerTest {
         memberPostDto = new MemberPostDto(name, password, email);
 
         //2
-        String name1 = "name1";
+        String name1 = "name2";
         String password1 = "123451";
         String email1 = "email1";
         memberPostDto1 = new MemberPostDto(name1, password1, email1);
@@ -74,7 +75,7 @@ class MemberControllerTest {
         Member memberTest = memberService.getMember(memberId1);
 
         //then
-        assertThat(2L).isEqualTo(memberTest.getId());
+        assertThat(memberTest.getName()).isEqualTo("name2");
     }
 
     @Test
@@ -87,8 +88,6 @@ class MemberControllerTest {
         String email = "abc@gmail.com";
         memberPatchDto = new MemberPatchDto(name,password,email);
 
-
-
         //when
         memberService.updateMember(1L, memberPatchDto);
         Member memberTest = memberService.getMember(1L);
@@ -99,5 +98,27 @@ class MemberControllerTest {
 
     @Test
     void deleteMember() {
+        //given
+        Long memberId = memberService.createMember(memberPostDto);
+        assertThat(memberService.getMember(memberId).getName()).isEqualTo("name1");
+
+        //when
+        memberService.memberGradeToSleep(memberId);
+        memberService.deleteMember(memberId);
+
+        //then
+        assertThrows(IllegalArgumentException.class, () -> memberService.getMember(1L));
+    }
+
+    @Test
+    void memberGrade() {
+        //given
+        Long memberId = memberService.createMember(memberPostDto);
+
+        //when
+        memberService.memberGradeToSleep(memberId);
+
+        //then
+        assertThat(memberService.getMember(memberId).getMemberRole()).isEqualTo(MemberRoleType.SLEEP);
     }
 }
