@@ -5,7 +5,6 @@ import MiniProject.BasicBoard.V1.member.dto.MemberPostDto;
 import MiniProject.BasicBoard.V1.member.entity.Member;
 import MiniProject.BasicBoard.V1.member.entity.MemberRoleType;
 import MiniProject.BasicBoard.V1.member.repository.MemberRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,12 @@ public class MemberService {
     public Long createMember(MemberPostDto memberPostDto){
         Member member = memberPostDto.memberDtoToEntity();
         return memberRepository.save(member).getId();
+    }
+
+    public Member login(String loginId, String password){
+        return memberRepository.findByLoginId(loginId)
+                .filter(x -> x.getPassword().equals(password))
+                .orElseThrow();
     }
 
     public Long updateMember(Long id,MemberPatchDto memberPatchDto){
